@@ -35,16 +35,16 @@ namespace CustomControlsLib
             set => SetValue(PhoneNumberProperty, value);
         }
 
-        private bool _isValid;
+        public static readonly DependencyProperty IsValidProperty = DependencyProperty.Register(
+            "IsValid",
+            typeof(bool),
+            typeof(PhoneMaskTextBox),
+            new PropertyMetadata(false));  // Default to false
 
         public bool IsValid
         {
-            get => _isValid;
-            private set
-            {
-                _isValid = value;
-
-            }
+            get => (bool)GetValue(IsValidProperty);
+            private set => SetValue(IsValidProperty, value);
         }
 
         // Dependency Property for Mask

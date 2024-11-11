@@ -35,6 +35,18 @@ namespace CustomControlsLib
             set => SetValue(IbanProperty, value);
         }
 
+        public static readonly DependencyProperty IsValidProperty = DependencyProperty.Register(
+            "IsValid",
+            typeof(bool),
+            typeof(PhoneMaskTextBox),
+            new PropertyMetadata(false));  // Default to false
+
+        public bool IsValid
+        {
+            get => (bool)GetValue(IsValidProperty);
+            private set => SetValue(IsValidProperty, value);
+        }
+
         public IbanTextBox()
         {
             InitializeComponent();
@@ -64,8 +76,9 @@ namespace CustomControlsLib
         private void Validate(string iban)
         {
             string ibanPattern = @"^\d{24}$";
+            IsValid = Regex.IsMatch(ibanTextBox.Text, ibanPattern);
 
-            if(!Regex.IsMatch(ibanTextBox.Text, ibanPattern) && !string.IsNullOrEmpty(ibanTextBox.Text))
+            if (!IsValid && !string.IsNullOrEmpty(ibanTextBox.Text))
             {
                 OuterBorder.BorderBrush = new SolidColorBrush(Colors.Red);
                 TooltipMessageIban = $"Iban is a total of 24 numbers";

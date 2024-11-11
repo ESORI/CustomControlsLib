@@ -36,6 +36,18 @@ namespace CustomControlsLib
             set => SetValue(EmailProperty, value);
         }
 
+        public static readonly DependencyProperty IsValidProperty = DependencyProperty.Register(
+            "IsValid",
+            typeof(bool),
+            typeof(PhoneMaskTextBox),
+            new PropertyMetadata(false));  // Default to false
+
+        public bool IsValid
+        {
+            get => (bool)GetValue(IsValidProperty);
+            private set => SetValue(IsValidProperty, value);
+        }
+
         public EmailTextBox()
         {
             InitializeComponent();
@@ -71,8 +83,9 @@ namespace CustomControlsLib
         private void Validate(string email)
         {
             string emailPattern = @"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$";
+            IsValid = Regex.IsMatch(emailTextBox.Text, emailPattern);
 
-            if (!Regex.IsMatch(emailTextBox.Text, emailPattern) && !string.IsNullOrEmpty(emailTextBox.Text))
+            if (!IsValid && !string.IsNullOrEmpty(emailTextBox.Text))
             {
                 OuterBorder.BorderBrush = new SolidColorBrush(Colors.Red);
                 TooltipMessageEmail = $"Email must be similar to: example@mail.com";

@@ -37,6 +37,18 @@ namespace CustomControlsLib
             set => SetValue(DniProperty, value);
         }
 
+        public static readonly DependencyProperty IsValidProperty = DependencyProperty.Register(
+            "IsValid",
+            typeof(bool),
+            typeof(PhoneMaskTextBox),
+            new PropertyMetadata(false));  // Default to false
+
+        public bool IsValid
+        {
+            get => (bool)GetValue(IsValidProperty);
+            private set => SetValue(IsValidProperty, value);
+        }
+
         public string TooltipMessageDni
         {
             get { return (string)GetValue(TooltipMessageDniProperty); }
@@ -68,11 +80,14 @@ namespace CustomControlsLib
         private void Validate(string dni)
         {
             string dniPattern = @"^\d{8}[A-Za-z]$";
-            if(!Regex.IsMatch(dniTextBox.Text, dniPattern) && !string.IsNullOrEmpty(dniTextBox.Text))
+
+            IsValid = Regex.IsMatch(dniTextBox.Text, dniPattern);
+
+
+            if (!IsValid && !string.IsNullOrEmpty(dniTextBox.Text))
             {
                 OuterBorder.BorderBrush = new SolidColorBrush(Colors.Red);
-                TooltipMessageDni = $"Text must be 8 numbers and 1 letter";
-
+                TooltipMessageDni = "Text must be 8 numbers and 1 letter";
             }
             else
             {

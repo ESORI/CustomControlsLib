@@ -82,10 +82,10 @@ namespace CustomControlsLib
 
         private void Validate(string name)
         {
-            bool isValid = name.Length >= MinLength;
-            IsValid = isValid; // Update IsValid property
+            IsValid = name.Length >= MinLength;
+            
 
-            if (!isValid)
+            if (!IsValid)
             {
                 OuterBorder.BorderBrush = new SolidColorBrush(Colors.Red);
                 TooltipMessage = $"Text length must be at least {MinLength} characters.";

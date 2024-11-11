@@ -44,6 +44,18 @@ namespace CustomControlsLib
             set { SetValue(TooltipMessagePinProperty, value); }
         }
 
+        public static readonly DependencyProperty IsValidProperty = DependencyProperty.Register(
+            "IsValid",
+            typeof(bool),
+            typeof(PhoneMaskTextBox),
+            new PropertyMetadata(false));  // Default to false
+
+        public bool IsValid
+        {
+            get => (bool)GetValue(IsValidProperty);
+            private set => SetValue(IsValidProperty, value);
+        }
+
         public PinTextBox()
         {
             InitializeComponent();
@@ -74,8 +86,9 @@ namespace CustomControlsLib
         private void Validate(string pin)
         {
             string pinPattern = @"^\d{4}$";
+            IsValid = Regex.IsMatch(pinTextBox.Text, pinPattern);
 
-            if (!Regex.IsMatch(pinTextBox.Text, pinPattern) && !string.IsNullOrEmpty(pinTextBox.Text))
+            if (!IsValid && !string.IsNullOrEmpty(pinTextBox.Text))
             {
                 OuterBorder.BorderBrush = new SolidColorBrush(Colors.Red);
                 TooltipMessagePin = $"Pin must be 4 characters.";

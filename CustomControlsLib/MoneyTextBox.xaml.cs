@@ -37,6 +37,17 @@ namespace CustomControlsLib
             get => (string)GetValue(MoneyProperty);
             set => SetValue(MoneyProperty, value);
         }
+        public static readonly DependencyProperty IsValidProperty = DependencyProperty.Register(
+            "IsValid",
+            typeof(bool),
+            typeof(PhoneMaskTextBox),
+            new PropertyMetadata(false));  // Default to false
+
+        public bool IsValid
+        {
+            get => (bool)GetValue(IsValidProperty);
+            private set => SetValue(IsValidProperty, value);
+        }
 
         public MoneyTextBox()
         {
@@ -79,8 +90,9 @@ namespace CustomControlsLib
         private void Validate(string pin)
         {
             string moneyPattern = @"^\d*$";
+            IsValid = Regex.IsMatch(moneyTextBox.Text, moneyPattern);
 
-            if (!Regex.IsMatch(moneyTextBox.Text, moneyPattern) && !string.IsNullOrEmpty(moneyTextBox.Text))
+            if (!IsValid && !string.IsNullOrEmpty(moneyTextBox.Text))
             {
                 OuterBorder.BorderBrush = new SolidColorBrush(Colors.Red);
                 TooltipMessageMoney = $"If no saving or debt, leave untouched";
