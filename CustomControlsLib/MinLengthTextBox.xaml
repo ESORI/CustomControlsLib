@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="CustomControlsLib.MinLengthTextBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:CustomControlsLib"
+             mc:Ignorable="d"
+             >
+
+
+    <Border x:Name="OuterBorder" BorderThickness="1" BorderBrush="Gray">
+        <TextBox x:Name="nameTextBox" Width="570" Height="33.25" 
+                         BorderThickness="0" Background="White"
+                         ToolTip="{Binding TooltipMessage, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+    </Border>
+
+</UserControl>
